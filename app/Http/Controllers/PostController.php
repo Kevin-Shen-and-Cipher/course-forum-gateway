@@ -15,9 +15,6 @@ class PostController extends Controller
         $this->API_URL=env('APP_COURSE_FORUM_API');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         // ddd("{$this->API_URL}/posts");
@@ -27,35 +24,31 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->all(); 
+        $response = Http::post("{$this->API_URL}/posts", $data); 
+        return $response->json();
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $response = Http::get("{$this->API_URL}/posts/{$id}"); 
+        $posts = $response->json();
+        return response()->json($posts);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $response = Http::patch("{$this->API_URL}/posts/{$id}",$request); 
+        $posts = $response->json();
+        return response()->json($posts);       
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $response = Http::delete("{$this->API_URL}/posts/{$id}"); 
+        $posts = $response->json();
+        return response()->json($posts); 
     }
 }

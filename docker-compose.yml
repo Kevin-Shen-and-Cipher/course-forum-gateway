@@ -1,0 +1,21 @@
+version: '3.8'
+
+networks:
+  app-network:
+
+volumes:
+  app-data:
+
+services:
+  backend:
+    build:
+      context: /php
+      dockerfile: Dockerfile
+    container_name: backend
+    volumes:
+      - ./:/var/www
+      - /php/php.ini:/usr/local/etc/php/conf.d/local.ini
+    port:
+      - '8000'
+    networks:
+      app-network:

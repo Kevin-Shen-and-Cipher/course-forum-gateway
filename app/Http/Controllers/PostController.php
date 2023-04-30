@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Http\Requests\vertifyRequest;
 
 class PostController extends Controller
 {
@@ -22,10 +22,12 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
-    public function store(Request $request)
+    public function store(vertifyRequest $request)
     {
+       
         $data = $request->all();
         $response = Http::post($this->API_URL, $data);
+        echo $response;
         return $response->json();
     }
 
@@ -36,17 +38,19 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
-    public function update(Request $request, string $id)
+    public function update(vertifyRequest $request, string $id)
     {
         $response = Http::patch("{$this->API_URL}/{$id}", $request);
         $posts = $response->json();
         return response()->json($posts);
     }
 
-    public function destroy(string $id)
+    public function destroy(vertifyRequest $request, string $id)
     {
-        $response = Http::delete("{$this->API_URL}/{$id}");
-        $posts = $response->json();
-        return response()->json($posts);
+        if($request){
+            $response = Http::delete("{$this->API_URL}/{$id}");
+            $posts = $response->json();
+            return response()->json($posts);
+        }
     }
 }

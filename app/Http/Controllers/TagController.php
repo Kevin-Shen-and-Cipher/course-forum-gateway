@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
-use App\Http\Requests\vertifyRequest;
+use App\Http\Requests\TagDestroyRequest;
+use App\Http\Requests\TagStoreRequest;
+use App\Http\Requests\TagUpdataRequest;
 
 class TagController extends Controller
 {
@@ -22,7 +24,7 @@ class TagController extends Controller
         return response()->json($tags);
     }
 
-    public function store(vertifyRequest $request)
+    public function store(TagStoreRequest $request)
     {
         $data = $request->all();
         $response = Http::post($this->API_URL, $data);
@@ -36,19 +38,17 @@ class TagController extends Controller
         return response()->json($tags);
     }
 
-    public function update(vertifyRequest $request, string $id)
+    public function update(TagUpdataRequest $request, string $id)
     {
         $response = Http::patch("{$this->API_URL}/{$id}", $request);
         $tags = $response->json();
         return response()->json($tags);
     }
 
-    public function destroy(vertifyRequest $request, string $id)
+    public function destroy(TagDestroyRequest $request, string $id)
     {
-        if($request){
         $response = Http::delete("{$this->API_URL}/{$id}");
         $tags = $response->json();
         return response()->json($tags);  
-        }
     }
 }

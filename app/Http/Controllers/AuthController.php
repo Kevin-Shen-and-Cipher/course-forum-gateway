@@ -3,39 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
-use App\Http\Requests\vertifyRequest;
 use Illuminate\Http\Request;
-
 class AuthController extends Controller
 {
-    private string $API_URL;
+    private string $API_URL_Login;
+    private string $API_URL_Vertify;
 
     public function __construct()
     {
         $envAPI  = env('APP_COURSE_AUTH_API');
-        $this->API_URL = "{$envAPI}/posts";
+        $this->API_URL_Login = "{$envAPI}/login";
+        $this->API_URL_Vertify = "{$envAPI}/jwt-tokens/verify";
     }
 
     public function login(Request $request)
     {
         $data = $request->all();
-        $response = Http::post("{$this->API_URL}/login", $data);
-
+        $response = Http::post("{$this->API_URL_Login}/login", $data);
         return $response()->json();
     }
 
-    public function vertify(vertifyRequest $request)
+    public function verify(Request $request)
     {
-        // 參數:token
-        // 回傳:身分
-        // dd($request,$request->header('Authorization'));
         $token = $request->header('Authorization');
-        echo $token;
-        // if (empty($token)) {
-        //     return  "401";
-        // }
-        
-        // return Http::post("{$this->API_URL}/jwt-tokens/vertify", $token);
-        return $token;
+        try{
+            $token = str_replace('Bearer ', '', $token);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred'],  $e->getMessage());
+        }
+        if (empty($token)) {
+            return  "401";
+        }
+        return Http::post("{$this->API_URL_Vertify}/jwt-tokens/verify", $token);
     }
 }

@@ -18,7 +18,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        return  Http::post("{$this->API_URL_LOGIN}/login", $request);
+        return  Http::post("{$this->API_URL_LOGIN}/login", $request)->json();
     }
 
     public function verify(Request $request)

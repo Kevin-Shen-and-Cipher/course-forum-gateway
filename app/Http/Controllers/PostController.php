@@ -19,36 +19,26 @@ class PostController extends Controller
 
     public function index()
     {
-        $response = Http::get($this->API_URL);
-        $posts = $response->json();
-        return response()->json($posts);
+        return Http::get($this->API_URL)->json();
     }
 
     public function store(PostStoreRequest $request)
     {
-        $data = $request->all();
-        $response = Http::post($this->API_URL, $data);
-        return $response->json();
+        return Http::post($this->API_URL, $request)->json();
     }
 
     public function show(string $id)
     {
-        $response = Http::get("{$this->API_URL}/{$id}");
-        $posts = $response->json();
-        return response()->json($posts);
+        return Http::get("{$this->API_URL}/{$id}")->json();
     }
 
     public function update(PostUpdataRequest $request, string $id)
     {
-        $response = Http::patch("{$this->API_URL}/{$id}", $request);
-        $posts = $response->json();
-        return response()->json($posts);
+        return Http::patch("{$this->API_URL}/{$id}", $request)->json();
     }
 
     public function destroy(PostDestroyRequest $request, string $id)
     {
-            $response = Http::delete("{$this->API_URL}/{$id}");
-            $posts = $response->json();
-            return response()->json($posts);
+        return Http::delete("{$this->API_URL}/{$id}")->json();
     }
 }

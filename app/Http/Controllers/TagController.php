@@ -19,36 +19,26 @@ class TagController extends Controller
 
     public function index()
     {
-        $response = Http::get($this->API_URL);
-        $tags = $response->json();
-        return response()->json($tags);
+        return Http::get($this->API_URL)->json();
     }
 
     public function store(TagStoreRequest $request)
     {
-        $data = $request->all();
-        $response = Http::post($this->API_URL, $data);
-        return $response->json();
+        return Http::post($this->API_URL, $request)->json();
     }
 
     public function show(string $id)
     {
-        $response = Http::get("{$this->API_URL}/{$id}");
-        $tags = $response->json();
-        return response()->json($tags);
+        return Http::get("{$this->API_URL}/{$id}")->json();
     }
 
     public function update(TagUpdataRequest $request, string $id)
     {
-        $response = Http::patch("{$this->API_URL}/{$id}", $request);
-        $tags = $response->json();
-        return response()->json($tags);
+        return Http::patch("{$this->API_URL}/{$id}", $request)->json();
     }
 
     public function destroy(TagDestroyRequest $request, string $id)
     {
-        $response = Http::delete("{$this->API_URL}/{$id}");
-        $tags = $response->json();
-        return response()->json($tags);  
+        return Http::delete("{$this->API_URL}/{$id}")->json();  
     }
 }

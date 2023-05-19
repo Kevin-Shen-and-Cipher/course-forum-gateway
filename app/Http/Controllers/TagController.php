@@ -9,11 +9,11 @@ use App\Http\Requests\TagUpdataRequest;
 
 class TagController extends Controller
 {
-    private  string $API_URL;
+    private string $API_URL;
 
     public function __construct()
     {
-        $envAPI  = env('APP_COURSE_FORUM_API');
+        $envAPI = env('APP_COURSE_FORUM_API');
         $this->API_URL = "{$envAPI}/tags";
     }
 

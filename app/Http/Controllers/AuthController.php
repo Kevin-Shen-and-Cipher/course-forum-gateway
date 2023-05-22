@@ -25,13 +25,13 @@ class AuthController extends Controller
     {
         $token = $request->header('Authorization');
         try{
-            $token = str_replace('Bearer ', '', $token);
+           $token = str_replace('Bearer ', '', $token);
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred'],  $e->getMessage());
         }
         if (empty($token)) {
             return  "401";
         }
-        return Http::post("{$this->API_URL_VERIFY}/jwt-tokens/verify", $token)->json();
+         return Http::post("{$this->API_URL_VERIFY}/jwt-tokens/verify", $token)->json();
     }
 }

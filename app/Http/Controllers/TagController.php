@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\ApiResponse;
 use Illuminate\Support\Facades\Http;
 use App\Http\Requests\TagDestroyRequest;
 use App\Http\Requests\TagStoreRequest;
@@ -9,6 +10,7 @@ use App\Http\Requests\TagUpdataRequest;
 
 class TagController extends Controller
 {
+    use ApiResponse;
     private  string $API_URL;
 
     public function __construct()
@@ -19,26 +21,26 @@ class TagController extends Controller
 
     public function index()
     {
-        return Http::get($this->API_URL)->json();
+        return $this->apiResponse(Http::get($this->API_URL));
     }
 
     public function store(TagStoreRequest $request)
     {
-        return Http::post($this->API_URL, $request)->json();
+        return $this->apiResponse(Http::post($this->API_URL, $request->all()));
     }
 
     public function show(string $id)
     {
-        return Http::get("{$this->API_URL}/{$id}")->json();
+        return $this->apiResponse(Http::get("{$this->API_URL}/{$id}"));
     }
 
     public function update(TagUpdataRequest $request, string $id)
     {
-        return Http::patch("{$this->API_URL}/{$id}", $request)->json();
+        return $this->apiResponse(Http::patch("{$this->API_URL}/{$id}", $request->all()));
     }
 
     public function destroy(TagDestroyRequest $request, string $id)
     {
-        return Http::delete("{$this->API_URL}/{$id}")->json();  
+        return $this->apiResponse(Http::delete("{$this->API_URL}/{$id}"));  
     }
 }

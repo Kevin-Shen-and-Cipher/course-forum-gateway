@@ -15,7 +15,7 @@ class TagController extends Controller
 
     public function __construct()
     {
-        $envAPI  = env('APP_COURSE_FORUM_API');
+        $envAPI = env('APP_COURSE_FORUM_API');
         $this->API_URL = "{$envAPI}/tags";
     }
 
@@ -41,6 +41,6 @@ class TagController extends Controller
 
     public function destroy(TagDestroyRequest $request, string $id)
     {
-        return $this->apiResponse(Http::delete("{$this->API_URL}/{$id}"));  
+        return $this->apiResponse(Http::delete("{$this->API_URL}/{$id}"));
     }
 }

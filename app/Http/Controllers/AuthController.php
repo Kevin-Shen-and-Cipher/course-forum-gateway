@@ -32,6 +32,6 @@ class AuthController extends Controller
         if (empty($token)) {
             return  "401";
         }
-         return Http::post("{$this->API_URL_VERIFY}/jwt-tokens/verify", $token)->json();
+        return $this->apiResponse(Http::post("{$this->API_URL_VERIFY}/jwt-tokens/verify", $token));
     }
 }

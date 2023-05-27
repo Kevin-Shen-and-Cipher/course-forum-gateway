@@ -23,9 +23,6 @@ class VerifyAdminRequest extends FormRequest
     public function isAdmin($response)
     {
         $identity = json_decode($response, true);
-        if ($identity["identity"] === "admin") {
-            return true; 
-        } 
-        return false;
+        return $identity["identity"] === "admin";
     }
 }

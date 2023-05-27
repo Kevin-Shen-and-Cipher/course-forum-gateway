@@ -30,7 +30,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'An error occurred'],  $e->getMessage());
         }
         if (empty($token)) {
-            return  "401";
+            return response("Token is empty", 401);
         }
         return $this->apiResponse(Http::post($this->API_URL_VERIFY, $token));
     }

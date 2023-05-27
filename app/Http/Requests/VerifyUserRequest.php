@@ -23,9 +23,6 @@ class VerifyUserRequest extends FormRequest
     public function isUser($response)
     {
         $identity = json_decode($response, true);
-        if ($identity["identity"] === "user") {
-            return true; 
-        } 
-        return false;
+        return $identity["identity"] === "user";
     }
 }

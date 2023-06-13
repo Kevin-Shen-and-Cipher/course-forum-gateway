@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use App\Traits\ApiResponse;
 class AuthController extends Controller
 {
+    use ApiResponse;
     private string $API_URL_LOGIN;
     private string $API_URL_VERIFY;
 
@@ -18,7 +20,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-       return  Http::post($this->API_URL_LOGIN, $request)->json();
+        return  $this->apiResponse(Http::post($this->API_URL_LOGIN, $request->only('username', 'password')))->setEncodingOptions(JSON_UNESCAPED_UNICODE);  
     }
 
     public function verify(Request $request)

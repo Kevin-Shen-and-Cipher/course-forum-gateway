@@ -1,0 +1,22 @@
+version: '3.8'
+
+networks:
+  app-network:
+
+volumes:
+  app-data:
+
+services:
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: backend
+    volumes:
+      - /var/www/app/vendor
+      - ./:/var/www/app
+    restart: always
+    ports:
+      - '8000:8000'
+    networks:
+      app-network:

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
+
 class AuthController extends Controller
 {
     use ApiResponse;
@@ -12,27 +13,26 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $envAPI  = env('APP_COURSE_AUTH_API');
+        $envAPI = config('services.api.auth');
         $this->API_URL_LOGIN = "{$envAPI}/login";
-        $this->API_URL_VERIFY = "{$envAPI}/jwt-tokens/verify";
+        $this->API_URL_VERIFY = "{$envAPI}/verify";
     }
 
     public function login(Request $request)
     {
-        return  $this->apiResponse(Http::post($this->API_URL_LOGIN, $request->only('username', 'password')))->setEncodingOptions(JSON_UNESCAPED_UNICODE);  
+        return $this->apiResponse(Http::timeout(0)->post($this->API_URL_LOGIN, $request->only('username', 'password')))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
-    public function verify(Request $request)
+    public function verify(Request $request): string
     {
-        $token = $request->header('Authorization');
-        try{
-           $token = str_replace('Bearer ', '', $token);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'An error occurred'],  $e->getMessage());
+        $token = $request->bearerToken();
+
+        $response = Http::post($this->API_URL_VERIFY, ['token' => $token]);
+        
+        if ($response->ok()) {
+            return $response->json('identify');
+        } else {
+            return '';
         }
-        if (empty($token)) {
-            return response("Token is empty", 401);
-        }
-        return $this->apiResponse(Http::post($this->API_URL_VERIFY, $token));
     }
 }

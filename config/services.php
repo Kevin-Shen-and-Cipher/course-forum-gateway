@@ -30,5 +30,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'api' => [
+        'sentiment' => env('APP_SENTIMENT_API'),
+        'forum' => env('APP_COURSE_FORUM_API'),
+        'auth' => env('APP_COURSE_AUTH_API'),
+    ]
 ];

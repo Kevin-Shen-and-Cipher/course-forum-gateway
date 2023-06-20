@@ -6,7 +6,7 @@ use App\Traits\ApiResponse;
 use Illuminate\Support\Facades\Http;
 use App\Http\Requests\TagDestroyRequest;
 use App\Http\Requests\TagStoreRequest;
-use App\Http\Requests\TagUpdataRequest;
+use App\Http\Requests\TagUpdateRequest;
 
 class TagController extends Controller
 {
@@ -15,7 +15,7 @@ class TagController extends Controller
 
     public function __construct()
     {
-        $envAPI = env('APP_COURSE_FORUM_API');
+        $envAPI = config('services.api.forum');
         $this->API_URL = "{$envAPI}/tags";
     }
 
@@ -34,7 +34,7 @@ class TagController extends Controller
         return $this->apiResponse(Http::get("{$this->API_URL}/{$id}"));
     }
 
-    public function update(TagUpdataRequest $request, string $id)
+    public function update(TagUpdateRequest $request, string $id)
     {
         return $this->apiResponse(Http::patch("{$this->API_URL}/{$id}", $request->all()));
     }

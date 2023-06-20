@@ -11,7 +11,7 @@ class PostStoreRequest extends VerifyUserRequest
             'content' => ['required', 'string'],
             'create_by' => ['required', 'string'],
             'score' => ['required', 'integer', 'min:1', 'max:5'],
-            'tags' => ['required', 'array'],
+            'tags' => ['array'],
             'title' => ['required', 'string'],
         ];
     }

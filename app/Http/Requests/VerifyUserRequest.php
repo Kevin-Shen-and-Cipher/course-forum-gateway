@@ -16,13 +16,8 @@ class VerifyUserRequest extends FormRequest
 
     public function authorize()
     {
-        $response =$this->auth->verify($this);
-        return $this->isUser($response);
-    }
+        $identify = $this->auth->verify($this);
 
-    public function isUser($response)
-    {
-        $identity = json_decode($response, true);
-        return $identity["identity"] === "user";
+        return $identify === "user" || $identify === 'admin';
     }
 }

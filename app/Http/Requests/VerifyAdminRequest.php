@@ -16,13 +16,8 @@ class VerifyAdminRequest extends FormRequest
     
     public function authorize()
     {
-        $response =$this->auth->verify($this);
-        return $this->isAdmin($response);
+        $identify = $this->auth->verify($this);
 
-    }
-    public function isAdmin($response)
-    {
-        $identity = json_decode($response, true);
-        return $identity["identity"] === "admin";
+        return $identify === "admin";
     }
 }

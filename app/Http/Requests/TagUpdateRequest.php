@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 use App\Http\Requests\VerifyAdminRequest;
 
-class TagUpdataRequest extends VerifyAdminRequest
+class TagUpdateRequest extends VerifyAdminRequest
 {
     public function rules(): array
     {

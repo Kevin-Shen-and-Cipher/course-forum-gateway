@@ -9,13 +9,14 @@ volumes:
 services:
   backend:
     build:
-      context: /php
+      context: ./
       dockerfile: Dockerfile
     container_name: backend
     volumes:
-      - ./:/var/www
-      - /php/php.ini:/usr/local/etc/php/conf.d/local.ini
-    port:
-      - '8000'
+      - /var/www/app/vendor
+      - ./:/var/www/app
+    restart: always
+    ports:
+      - '8000:8000'
     networks:
       app-network:
